@@ -40,9 +40,10 @@ def upsert_body_measurement(
     data: dict[str, Any],
 ) -> None:
     """Upsert body measurement data."""
+    user_id = data.get("user_id", "unknown")
     with conn.cursor() as cur:
         # Delete old and insert new (simpler than upsert for this table)
-        cur.execute("DELETE FROM whoop_body_measurement WHERE user_id = %(user_id)s", data)
+        cur.execute("DELETE FROM whoop_body_measurement WHERE user_id = %(user_id)s", {"user_id": user_id})
         cur.execute(
             """
             INSERT INTO whoop_body_measurement
@@ -50,7 +51,7 @@ def upsert_body_measurement(
             VALUES (%(user_id)s, %(height_meter)s, %(weight_kilogram)s, %(max_heart_rate)s)
             """,
             {
-                "user_id": data.get("user_id", "unknown"),
+                "user_id": user_id,
                 "height_meter": data.get("height_meter"),
                 "weight_kilogram": data.get("weight_kilogram"),
                 "max_heart_rate": data.get("max_heart_rate"),
