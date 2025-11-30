@@ -84,6 +84,7 @@ class WhoopAPIClient:
             params: dict[str, Any] = {
                 "start": f"{start_date}T00:00:00.000Z",
                 "end": f"{end_date}T23:59:59.999Z",
+                "limit": 100,  # Request max records per page
             }
             if next_token:
                 params["nextToken"] = next_token
