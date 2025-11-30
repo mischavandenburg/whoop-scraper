@@ -141,10 +141,14 @@ def cmd_scrape(args: argparse.Namespace) -> int:
     days = args.days if args.days else settings.scrape_days
 
     try:
-        scraper = WhoopScraper(days=days)
+        scraper = WhoopScraper(
+            days=days,
+            start_date=args.start_date,
+            end_date=args.end_date,
+        )
         stats = scraper.scrape_all()
 
-        print(f"\nScrape completed for {days} days ({scraper.start_date} to {scraper.end_date})")
+        print(f"\nScrape completed ({scraper.start_date} to {scraper.end_date})")
         print("Results:")
         total_records = 0
         for endpoint, result in stats.items():
@@ -211,6 +215,18 @@ def main() -> None:
         type=int,
         default=None,
         help="Number of days to scrape (default: WHOOP_SCRAPE_DAYS or 7)",
+    )
+    scrape_parser.add_argument(
+        "--start-date",
+        type=str,
+        default=None,
+        help="Start date (YYYY-MM-DD) - overrides --days",
+    )
+    scrape_parser.add_argument(
+        "--end-date",
+        type=str,
+        default=None,
+        help="End date (YYYY-MM-DD) - overrides --days",
     )
     scrape_parser.set_defaults(func=cmd_scrape)
 

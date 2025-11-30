@@ -16,14 +16,25 @@ logger = logging.getLogger(__name__)
 class WhoopScraper:
     """Orchestrates scraping all Whoop API endpoints and storing in database."""
 
-    def __init__(self, days: int = 7) -> None:
+    def __init__(
+        self,
+        days: int = 7,
+        start_date: str | None = None,
+        end_date: str | None = None,
+    ) -> None:
         """Initialize scraper.
 
         Args:
-            days: Number of days to scrape (default 7)
+            days: Number of days to scrape (default 7, ignored if start/end provided)
+            start_date: Explicit start date (YYYY-MM-DD)
+            end_date: Explicit end date (YYYY-MM-DD)
         """
         self.days = days
-        self.start_date, self.end_date = get_date_range(days)
+        if start_date and end_date:
+            self.start_date = start_date
+            self.end_date = end_date
+        else:
+            self.start_date, self.end_date = get_date_range(days)
         self.settings = get_settings()
 
         # Use database token storage for stateless container deployments
