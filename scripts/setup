@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+mise trust
+mise install
+uv sync
