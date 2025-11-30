@@ -10,7 +10,7 @@ from whoop_scraper.auth import WhoopAuth
 
 logger = logging.getLogger(__name__)
 
-BASE_URL = "https://api.prod.whoop.com/developer/v1"
+BASE_URL = "https://api.prod.whoop.com/developer/v2"
 
 
 def get_date_range(days: int) -> tuple[str, str]:

@@ -116,7 +116,7 @@ def cmd_test_api(args: argparse.Namespace) -> int:
         return 1
 
     # Test with user profile endpoint
-    url = "https://api.prod.whoop.com/developer/v1/user/profile/basic"
+    url = "https://api.prod.whoop.com/developer/v2/user/profile/basic"
     headers = {"Authorization": f"Bearer {token}"}
 
     try:
